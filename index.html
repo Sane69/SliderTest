@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!--
+    Programming by Ildar Sagdejev ( http://twitter.com/tknomad )
+  -->
+<meta charset="UTF-8">
+<title>Cloud 9 Carousel jQuery Plugin Demo</title>
+<link rel="stylesheet" href="css/main.css">
+<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <div class="header">
+    <div class="header__title">
+      <h3>Helpex</h3>
+      <img src="./r.png" alt="">
+    </div>
+    <div class="header__menu">
+      <a href="#">
+        <span id="span--first"></span>
+        <span></span>
+        <span></span>
+      </a>
+    </div>
+  </div>
+  <div class="section__title">
+    <div class="section__main">
+        <h1>Helpex</h1>
+        <img src="./r2.png" alt="">
+    </div>
+    <p>эффективно борется с симптомами простуды</p>
+  </div>
+<div id="wrap">
+<div id="showcase" class="noselect"><img class="cloud9-item" src="png2.png" alt="Chrome"> <img id="png3" class="cloud9-item" src="png3.png" alt="Internet Explorer"> <img id="png3" class="cloud9-item" src="png3.png" alt="Safari"> </div>
+<section class="info">
+    <p class="info__text1">Устраняет сухой кашель</p>
+    <p class="info__text2">Значимость этих проблем настолько очевидна, что начало повседневной работы по формированию позиции 
+      позволяет оценить значение позиций, занимаемых участниками в отношении поставленных задач.
+    </p>
+    <a href="#">Подробнее</a>
+</section>
+<div class="nav" class="noselect">
+<button class="left"><img src="./arrow-left.png" alt=""></button>
+<button class="right"><img src="./arrow-right.png" alt=""></button>
+</div>
+</div>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script> 
+<script src="./jquery.reflection.js"></script> 
+<script src="./jquery.cloud9carousel.js"></script> 
+<script>
+    $(function() {
+      var showcase = $("#showcase")
+      
+
+      showcase.Cloud9Carousel( {
+        yPos: 42,
+        yRadius: 48,
+        mirrorOptions: {
+          gap: 12,
+          height: 0.2
+        },
+        buttonLeft: $(".nav > .left"),
+        buttonRight: $(".nav > .right"),
+        bringToFront: true,
+        onRendered: showcaseUpdated,
+        onLoaded: function() {
+          showcase.css( 'visibility', 'visible' )
+          showcase.css( 'display', 'none' )
+          showcase.fadeIn( 1500 )
+        }
+      } )
+
+      function showcaseUpdated( showcase ) {
+        var title = $('#item-title').html(
+          $(showcase.nearestItem()).attr( 'alt' )
+        )
+
+        var c = Math.cos((showcase.floatIndex() % 1) * 2 * Math.PI)
+        title.css('opacity', 0.5 + (0.5 * c))
+      }
+
+      // Simulate physical button click effect
+      $('.nav > button').click( function( e ) {
+        var b = $(e.target).addClass( 'down' )
+        setTimeout( function() { b.removeClass( 'down' ) }, 80 )
+      } )
+
+      $(document).keydown( function( e ) {
+        //
+        // More codes: http://www.javascripter.net/faq/keycodes.htm
+        //
+        switch( e.keyCode ) {
+          /* left arrow */
+          case 37:
+            $('.nav > .left').click()
+            break
+
+          /* right arrow */
+          case 39:
+            $('.nav > .right').click()
+        }
+      } )
+    })
+  </script> 
+</body>
+</html>
